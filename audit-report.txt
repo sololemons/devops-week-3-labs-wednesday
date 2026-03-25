@@ -50,7 +50,7 @@ other::---
 
 === SUID Files in /opt ===
 (empty result = PASS)
-=== Sudo Policy for amina ===
+=== Sudo Policy for lemonsthedev ===
 Matching Defaults entries for lemonsthedev on lemonsthedev:
     env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin, use_pty
 

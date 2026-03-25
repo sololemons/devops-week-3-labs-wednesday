@@ -1,0 +1,43 @@
+# Restricted sudo policy for Amina (KijaniKiosk operations role)
+
+# systemctl abuse scenario 1: Privilege escalation via malicious service
+# If Amina is allowed to run unrestricted "sudo systemctl", she could create
+# a malicious systemd unit file that runs arbitrary commands as root.
+#
+# Example attack:
+# 1. Create malicious service file:
+#    /etc/systemd/system/backdoor.service
+#
+#    [Service]
+#    ExecStart=/bin/bash -c 'cp /bin/bash /tmp/rootbash && chmod +s /tmp/rootbash'
+#
+# 2. Reload systemd:
+#    sudo systemctl daemon-reload
+#
+# 3. Start malicious service:
+#    sudo systemctl start backdoor
+#
+# Result:
+# A root shell is created at /tmp/rootbash, allowing persistent privilege escalation.
+
+# systemctl abuse scenario 2: Denial of service or security bypass
+# With unrestricted systemctl access, lemonsthedev  could disable critical services.
+#
+# Example attacks:
+#
+# Disable SSH remote administration:
+#    sudo systemctl stop ssh
+#    sudo systemctl mask ssh
+#
+# Disable logging to hide malicious activity:
+#    sudo systemctl stop systemd-journald
+#
+# Disable firewall protection:
+#    sudo systemctl stop ufw
+#
+# Result:
+# Administrators lose access or monitoring capability, weakening system security.
+
+# These risks show why sudo rules must restrict BOTH:
+# 1. Allowed systemctl subcommands
+# 2. Specific service unit names
